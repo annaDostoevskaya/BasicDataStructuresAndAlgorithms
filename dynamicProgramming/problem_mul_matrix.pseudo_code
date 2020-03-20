@@ -1,0 +1,102 @@
+#include <assert.h>
+#include <stdio.h>
+#include <vector>
+
+
+using namespace std;
+
+
+typedef struct matrix {
+    int columns;
+    int rows;
+    int array[100][100];
+} matrix_t;
+
+
+void display_matrix(matrix_t A) {
+    for(int i = 0; i < A.rows; i++) {
+        for(int j = 0; j < A.columns; j++)
+            printf("%10d", A.array[i][j]);
+        printf("\n");
+    } printf("\n");
+}
+
+
+matrix_t *matrix_multiply(matrix_t A, matrix_t B)
+{
+    assert(A.columns == B.rows);
+    
+    static matrix_t C;
+    C.columns = A.columns;
+    C.rows = B.rows;
+    
+    for(int i = 0; i < A.rows; i++) {
+        for(int j = 0; j < B.columns; j++) {
+            C.array[i][j] = 0;
+            for(int k = 0; k < A.columns; k++) {
+                C.array[i][j] += A.array[i][k] * B.array[k][j];
+            }
+        }
+    }
+    
+    return &C;
+}
+
+
+void matrix_chain_order(vector<matrix_t> p)
+{
+    int n = p.size() - 1;
+    matrix_t m;
+    matrix_t s;
+    
+    for(int i = 0; i <= n; i++) {
+        for(int j = 0; j <= n; j++)
+        m.array[i][j] = 0;
+    }
+    
+    for(int l = 2; l <= n; l++) {
+        for(int i = 0; i <= n-l+1; i++) {
+            j = i + l - 1;
+            m.array[i][j] = 8524685;
+            for(int k = i; k <= j-1) {
+                int q = m.array[i][k] + m.array[k+1, j] + p[i-1]*p[k]*p[j];
+                if(q < m.array[i][j]) {
+                    m.array[i][j] = q;
+                    s[i][j] = k;
+                }
+            }
+        }
+    }
+    
+    return &({m, s});
+}
+
+int main(int argc, char **argv)
+{
+    /*
+    matrix_t A = {
+        3, 4, {
+            {1, 8, 9},
+            {9, 4, 32},
+            {9, 4, 2},
+            {65, 7, 2}
+        }
+    };
+    matrix_t B = {
+        4, 3, {
+            {4, 6, 8, 9}, 
+            {9, 7, 54, 2},
+            {98, 7, 12, 4}
+        }
+    };
+    
+    display_matrix(A);
+    display_matrix(B);
+
+    matrix_t *C = matrix_multiply(A, B);
+    
+    display_matrix(*C);
+    */
+    
+    return 0;
+}
